@@ -1,0 +1,5 @@
+   This is a State machine for a HPS-FPGA program.
+   It is created by Quartus 17.1(Std) in VHDL. 
+   Recomend you open it in Quartus 17.1(Std) and you then can simulate it in .vmf file.
+   Hope you like it and make it better!!!
+   <This vision is definitely just a simple module,actually,you should add some ports which you need,and then it could work better!>
