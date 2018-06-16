@@ -1,0 +1,11 @@
+
+State Machine - |state_machine|present_state
+Name present_state.Wy present_state.Wb present_state.Ww present_state.Ry present_state.Rx present_state.Rb present_state.Rw present_state.IDLE 
+present_state.IDLE 0 0 0 0 0 0 0 0 
+present_state.Rw 0 0 0 0 0 0 1 1 
+present_state.Rb 0 0 0 0 0 1 0 1 
+present_state.Rx 0 0 0 0 1 0 0 1 
+present_state.Ry 0 0 0 1 0 0 0 1 
+present_state.Ww 0 0 1 0 0 0 0 1 
+present_state.Wb 0 1 0 0 0 0 0 1 
+present_state.Wy 1 0 0 0 0 0 0 1 

@@ -1,0 +1,101 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1100mV 85C Model Setup 'run_i'
+Slack : -13.821
+TNS   : -404.016
+
+Type  : Slow 1100mV 85C Model Setup 'clock_i'
+Slack : -5.239
+TNS   : -181.097
+
+Type  : Slow 1100mV 85C Model Hold 'run_i'
+Slack : -3.952
+TNS   : -71.922
+
+Type  : Slow 1100mV 85C Model Hold 'clock_i'
+Slack : -0.337
+TNS   : -0.337
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'clock_i'
+Slack : -0.724
+TNS   : -54.255
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'run_i'
+Slack : 0.048
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Setup 'run_i'
+Slack : -13.537
+TNS   : -404.207
+
+Type  : Slow 1100mV 0C Model Setup 'clock_i'
+Slack : -5.136
+TNS   : -172.977
+
+Type  : Slow 1100mV 0C Model Hold 'run_i'
+Slack : -4.012
+TNS   : -70.076
+
+Type  : Slow 1100mV 0C Model Hold 'clock_i'
+Slack : -0.443
+TNS   : -0.443
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'clock_i'
+Slack : -0.724
+TNS   : -54.325
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'run_i'
+Slack : 0.064
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Setup 'run_i'
+Slack : -6.487
+TNS   : -173.836
+
+Type  : Fast 1100mV 85C Model Setup 'clock_i'
+Slack : -2.281
+TNS   : -65.056
+
+Type  : Fast 1100mV 85C Model Hold 'run_i'
+Slack : -1.639
+TNS   : -29.540
+
+Type  : Fast 1100mV 85C Model Hold 'clock_i'
+Slack : -0.207
+TNS   : -0.207
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'run_i'
+Slack : -0.156
+TNS   : -3.672
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'clock_i'
+Slack : -0.085
+TNS   : -4.095
+
+Type  : Fast 1100mV 0C Model Setup 'run_i'
+Slack : -5.554
+TNS   : -150.001
+
+Type  : Fast 1100mV 0C Model Setup 'clock_i'
+Slack : -2.169
+TNS   : -62.151
+
+Type  : Fast 1100mV 0C Model Hold 'run_i'
+Slack : -1.580
+TNS   : -30.436
+
+Type  : Fast 1100mV 0C Model Hold 'clock_i'
+Slack : -0.189
+TNS   : -0.189
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'run_i'
+Slack : -0.135
+TNS   : -2.656
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'clock_i'
+Slack : -0.087
+TNS   : -4.198
+
+------------------------------------------------------------

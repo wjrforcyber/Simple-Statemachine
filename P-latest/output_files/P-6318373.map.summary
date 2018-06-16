@@ -1,0 +1,17 @@
+Analysis & Synthesis Status : Successful - Sat Jun 16 22:51:25 2018
+Quartus Prime Version : 17.1.0 Build 590 10/25/2017 SJ Standard Edition
+Revision Name : P-6318373
+Top-level Entity Name : state_machine
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 49
+Total pins : 47
+Total virtual pins : 0
+Total block memory bits : 0
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0

@@ -1,0 +1,191 @@
+library ieee;
+use ieee.std_logic_1164.all;
+USE ieee.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
+entity state_machine is
+port(
+     clock_i: IN STD_LOGIC;--时钟信号
+      mode_i: in std_logic;
+		run_i:in std_logic;
+		lrq_i: in STD_LOGIC;
+		block_size: in std_logic_vector(9 downto 0);
+		start_addr: in std_logic_vector(9 downto 0);
+		result_addr: in std_logic_vector(9 downto 0);
+		w_r_o: out STD_LOGIC;--读写信号，训练低电平，写入高电平
+		addr_o: out STD_LOGIC_vector(9 downto 0);--输出地址
+		clk_en_o: out STD_LOGIC;--使能端，高有效
+      
+		lrq_o: out STD_LOGIC);--完成Ww,Wb后，用于中断信号，进入IDLE状态
+		
+		
+END state_machine;
+
+--Architecture definition for the  state_machine entity
+architecture LW of state_machine is
+component my_dff
+port(d: in std_logic;
+     clk : in std_logic;
+	  q : out std_logic);
+end component;
+   type state_type is(IDLE,Rw,Rb,Rx,Ry,Ww,Wb,Wy);   --Def states
+signal run_dly_s,run_pulse_s:std_logic;
+signal present_state,next_state:state_type;--前两者分别是延迟信号和抑或后的信号
+signal cnt_sig_s,next_sig,addr_s,next_addr,addr_r,addr_w,next_addr_r,next_addr_w:std_logic_vector(9 downto 0);
+--signal lrq_o_w:std_logic;
+begin
+   u1:my_dff port map(run_i,clock_i,run_dly_s);--使信号产生时延
+	run_pulse_s<=run_i xor run_dly_s;--比特翻转
+	p1:process(clock_i)
+	   begin
+		    if(clock_i'event and clock_i='1')then
+			     present_state<=next_state;
+				  cnt_sig_s<=next_sig;
+				  addr_s<=next_addr;
+				  addr_r<=next_addr_r;
+				  addr_w<=next_addr_w;
+			 end if;
+		end process;
+	p2:process(present_state,run_i,run_pulse_s,mode_i,cnt_sig_s)
+	
+
+	begin
+	
+	case present_state is
+			   WHEN IDLE=>
+				if(run_i = '0')then
+	            next_state<=IDLE;
+					next_sig<=cnt_sig_s;
+	         elsif ( run_i = '1'and run_pulse_s = '1' )then
+				     next_state<=Rw;
+					  next_sig<=block_size;
+					  next_addr_r<=start_addr;
+					  next_addr_w<=result_addr;
+					  next_addr<=next_addr_w;
+				end if;
+			   WHEN Rw=>
+				   next_state<=Rb;
+					next_sig<=cnt_sig_s;
+					next_addr_r<=addr_r;
+					next_addr_w<=addr_w+'1';
+					next_addr<=next_addr_w;
+				WHEN Rb=>
+				   next_state<=Rx;
+					next_sig<=cnt_sig_s;
+					next_addr_r<=addr_r;
+					next_addr_w<=addr_w;
+					next_addr<=next_addr_r;
+				WHEN Rx=>
+				  if (mode_i='0')then
+				   next_state<=Ry;
+					next_sig<=cnt_sig_s;
+					next_addr_r<=addr_r+'1';
+					next_addr_w<=addr_w;
+					next_addr<=next_addr_r;
+				  elsif(mode_i='1')then
+				   next_state<=Wy;
+					next_sig<=cnt_sig_s;
+					next_addr_r<=addr_r;
+					next_addr_w<=addr_w+'1';
+					next_addr<=next_addr_w;
+				   end if;
+				WHEN Ry=>
+				  if (cnt_sig_s = "0000000000")then
+				  next_state<=Ww;
+				  next_sig<=cnt_sig_s;
+				  next_addr_w<=result_addr;
+				  next_addr_r<=addr_r;
+				  next_addr<=next_addr_w;
+					else
+					 next_state<=Rx;
+					 next_sig<=cnt_sig_s-'1';
+					 next_addr_r<=addr_r+'1';
+					next_addr_w<=addr_w;
+					next_addr<=next_addr_r;
+					end if;
+				WHEN Ww=>
+				   next_state<=Wb;
+					next_sig<=cnt_sig_s;
+					 next_addr_r<=addr_r;
+					next_addr_w<=addr_w+'1';
+					next_addr<=next_addr_w;
+			   WHEN Wb=>
+			      next_state<=IDLE;
+					next_sig<=cnt_sig_s;
+					next_addr_r<=start_addr;
+					next_addr_w<=result_addr;
+					next_addr<=next_addr_r;
+				
+				WHEN Wy=>
+				  if (cnt_sig_s = "0000000000")then
+				    next_state<=IDLE;
+					 next_sig<=cnt_sig_s;
+					next_addr_r<=start_addr;
+					next_addr_w<=result_addr;
+					next_addr<=next_addr_r;
+					
+					else
+					 next_state<=Rx;
+					 next_sig<=cnt_sig_s-'1';
+					 next_addr_r<=addr_r+'1';
+					next_addr_w<=addr_w;
+					next_addr<=next_addr_r;
+					
+					end if;
+				end case;
+	end process;
+	p3: process(present_state)
+	   begin
+		  case present_state is
+		  when IDLE=>
+		       
+				 addr_o<=addr_s;
+				 clk_en_o<='0';
+				 w_r_o<='0';
+				 lrq_o<='1';
+		  when Rw=>
+		      
+				 addr_o<=addr_s;
+				 clk_en_o<='1';
+				 w_r_o<='0';
+				 lrq_o<='1';
+		 when Rb=>
+		       
+				 addr_o<=addr_s;
+				 clk_en_o<='1';
+				 w_r_o<='0';
+				 lrq_o<='0';
+			when Rx=>
+		       
+				 addr_o<=addr_s;
+				 clk_en_o<='1';
+				 w_r_o<='0';
+				 lrq_o<='0';
+			when Ry=>
+		      
+				 addr_o<=addr_s;
+				 clk_en_o<='1';
+				 w_r_o<='0';
+				 lrq_o<='0';
+			when Ww=>
+		      
+				 addr_o<=addr_s;
+				 clk_en_o<='1';
+				 w_r_o<='1';
+				 lrq_o<='0';
+			when Wb=>
+		      
+				 addr_o<=addr_s;
+				 clk_en_o<='1';
+				 w_r_o<='1';
+				 lrq_o<='0';
+			when Wy=>
+		      
+				 addr_o<=addr_s;
+				 clk_en_o<='1';
+				 w_r_o<='1';
+				 lrq_o<='0';
+				 
+			end case;
+	end process;
+
+end LW;	

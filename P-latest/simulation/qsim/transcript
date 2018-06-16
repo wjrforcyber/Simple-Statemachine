@@ -1,0 +1,31 @@
+# do P-6318373.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 23:03:12 on Jun 16,2018
+# vlog -work work P-6318373.vo 
+# -- Compiling module state_machine
+# 
+# Top level modules:
+# 	state_machine
+# End time: 23:03:12 on Jun 16,2018, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 23:03:12 on Jun 16,2018
+# vlog -work work P-6318373.vwf.vt 
+# -- Compiling module state_machine_vlg_vec_tst
+# 
+# Top level modules:
+# 	state_machine_vlg_vec_tst
+# End time: 23:03:12 on Jun 16,2018, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -novopt -c -t 1ps -L cyclonev_ver -L altera_ver -L altera_mf_ver -L 220model_ver -L sgate_ver -L altera_lnsim_ver work.state_machine_vlg_vec_tst 
+# Start time: 23:03:13 on Jun 16,2018
+# Loading work.state_machine_vlg_vec_tst
+# Loading work.state_machine
+# Loading altera_ver.dffeas
+# Loading altera_ver.PRIM_GDFF_LOW
+# after#25
+# ** Note: $finish    : P-6318373.vwf.vt(62)
+#    Time: 100 us  Iteration: 0  Instance: /state_machine_vlg_vec_tst
+# End time: 23:03:14 on Jun 16,2018, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
